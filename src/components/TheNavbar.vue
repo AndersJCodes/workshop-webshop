@@ -1,20 +1,23 @@
 <script setup lang="ts">
-defineProps<{
+/* defineProps<{
   user: string
-}>();
+}>(); */
 
-import { useUserStore } from "../stores/userStore";
-import { storeToRefs } from "pinia";
+import { inject } from 'vue';
+import { useUserStore } from '../stores/userStore';
+import { storeToRefs } from 'pinia';
 
 const userStore = useUserStore();
-const { name } = storeToRefs(userStore);
+/* const { name } = storeToRefs(userStore); */
 
 function promptForName() {
-  const userName = prompt('Var vänlig ange login namn')
+  const userName = prompt('Var vänlig ange login namn');
   if (userName) {
-    userStore.setName(userName)
+    userStore.setName(userName);
   }
 }
+
+const user = inject('user');
 </script>
 
 <template>
@@ -25,9 +28,7 @@ function promptForName() {
       <RouterLink to="/herr">Herr</RouterLink>
       <RouterLink to="/smycken">Smycken</RouterLink>
     </div>
-    <span v-if="user">
-      Välkommen, {{ user }}!
-    </span>
+    <span v-if="name"> Välkommen, {{ name }}! </span>
     <span v-else>
       <button @click="promptForName" class="inline-button">Logga in</button>
     </span>
@@ -53,6 +54,6 @@ function promptForName() {
 }
 
 span {
-  margin: 0 .5rem;
+  margin: 0 0.5rem;
 }
 </style>
